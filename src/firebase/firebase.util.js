@@ -3,7 +3,8 @@ import {
 	getAuth,
 	signInWithPopup,
 	GoogleAuthProvider,
-	createUserWithEmailAndPassword
+	createUserWithEmailAndPassword,
+	signInWithEmailAndPassword
 } from 'firebase/auth';
 import { doc, getDoc, getFirestore, setDoc } from 'firebase/firestore';
 
@@ -66,5 +67,8 @@ export const signUp = async (email, password, firstname, lastname) => {
 		throw error;
 	}
 };
+
+export const signIn = (email, password) =>
+	signInWithEmailAndPassword(auth, email, password);
 
 export default app;
