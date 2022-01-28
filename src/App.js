@@ -6,6 +6,7 @@ import ShopPage from './pages/shop/shop.component';
 import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import { auth, createUserProfileDocument } from './firebase/firebase.util';
 import { Component } from 'react';
+import { getDoc } from 'firebase/firestore';
 
 class App extends Component {
 	constructor(props) {
@@ -16,9 +17,22 @@ class App extends Component {
 
 	componentDidMount() {
 		this.unsubscribeFromAuth = auth.onAuthStateChanged(async user => {
-			if (!user) return;
+			try {
+				const userRef = await createUserProfileDocument(user);
+				const userSnap = await getDoc(userRef);
+				if (!userSnap.exists()) return;
+				this.setState(
+					{ currentUser: { id: userSnap.id, ...userSnap.data() } },
+					() => {
+						// todo show welcome message
+						console.log('welcome', userSnap.data().displayName);
+					}
+				);
+			} catch (error) {
+				console.log('fail to get user info', error.message);
+			}
+
 			this.setState({ currentUser: user });
-			createUserProfileDocument(user);
 		});
 	}
 
