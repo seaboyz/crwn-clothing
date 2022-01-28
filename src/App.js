@@ -17,6 +17,10 @@ class App extends Component {
 
 	componentDidMount() {
 		this.unsubscribeFromAuth = auth.onAuthStateChanged(async user => {
+			if (!user) {
+				this.setState({ currentUser: user });
+				return;
+			}
 			try {
 				const userRef = await createUserProfileDocument(user);
 				const userSnap = await getDoc(userRef);
@@ -31,8 +35,6 @@ class App extends Component {
 			} catch (error) {
 				console.log('fail to get user info', error.message);
 			}
-
-			this.setState({ currentUser: user });
 		});
 	}
 

@@ -1,5 +1,10 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import {
+	getAuth,
+	signInWithPopup,
+	GoogleAuthProvider,
+	createUserWithEmailAndPassword
+} from 'firebase/auth';
 import { doc, getDoc, getFirestore, setDoc } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -42,6 +47,24 @@ export const createUserProfileDocument = async (userAuth, addtionalData) => {
 		}
 	}
 	return userRef;
+};
+
+export const signUp = async (email, password, firstname, lastname) => {
+	try {
+		const userCredential = await createUserWithEmailAndPassword(
+			auth,
+			email,
+			password
+		);
+		const user = userCredential.user;
+		const displayName = `${firstname} ${lastname}`;
+		// save user to db
+		await createUserProfileDocument(user, { displayName });
+		return user;
+	} catch (error) {
+		console.log('fail to create a user ', error.message);
+		throw error;
+	}
 };
 
 export default app;
