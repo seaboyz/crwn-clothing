@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Header from './components/header/header.component';
 import HomePage from './pages/homepage/homepage.component';
@@ -17,7 +17,7 @@ class App extends Component {
 		const { setCurrentUser } = this.props;
 		this.unsubscribeFromAuth = auth.onAuthStateChanged(async user => {
 			if (!user) {
-				// setCurrentUser(null);
+				setCurrentUser(null);
 				return;
 			}
 			try {
@@ -43,7 +43,13 @@ class App extends Component {
 				<Routes>
 					<Route path='/' element={<HomePage />} />
 					<Route path='/shop' element={<ShopPage />} />
-					<Route path='/signin' element={<SignInAndSignUp />} />
+					{/* <Route path='/signin' element={<SignInAndSignUp />} /> */}
+					<Route
+						path='/signin'
+						element={
+							this.props.currentUser ? <HomePage /> : <SignInAndSignUp />
+						}
+					/>
 					<Route path='*' element={<HomePage />} />
 				</Routes>
 			</div>
@@ -53,5 +59,8 @@ class App extends Component {
 const mapDispatchToProps = dispath => ({
 	setCurrentUser: user => dispath(setCurrentUser(user))
 });
+const mapStateToProps = state => ({
+	currentUser: state.user.currentUser
+});
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
