@@ -7,31 +7,25 @@ import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.com
 import { auth, createUserProfileDocument } from './firebase/firebase.util';
 import { Component } from 'react';
 import { getDoc } from 'firebase/firestore';
+import { connect } from 'react-redux';
+import { setCurrentUser } from './redux/user/user.actions';
 
 class App extends Component {
-	constructor(props) {
-		super(props);
-		this.state = { currentUser: null };
-	}
 	unsubscribeFromAuth = null;
 
 	componentDidMount() {
+		const { setCurrentUser } = this.props;
 		this.unsubscribeFromAuth = auth.onAuthStateChanged(async user => {
 			if (!user) {
-				this.setState({ currentUser: null });
+				// setCurrentUser(null);
 				return;
 			}
 			try {
 				const userRef = await createUserProfileDocument(user);
 				const userSnap = await getDoc(userRef);
 				if (!userSnap.exists()) return;
-				this.setState(
-					{ currentUser: { id: userSnap.id, ...userSnap.data() } },
-					() => {
-						// todo show welcome message
-						console.log('welcome', userSnap.data().displayName);
-					}
-				);
+
+				setCurrentUser({ id: userSnap.id, ...userSnap.data() });
 			} catch (error) {
 				console.log('fail to get user info', error.message);
 			}
@@ -45,7 +39,7 @@ class App extends Component {
 	render() {
 		return (
 			<div className='App'>
-				<Header currentUser={this.state.currentUser} />
+				<Header />
 				<Routes>
 					<Route path='/' element={<HomePage />} />
 					<Route path='/shop' element={<ShopPage />} />
@@ -56,5 +50,8 @@ class App extends Component {
 		);
 	}
 }
+const mapDispatchToProps = dispath => ({
+	setCurrentUser: user => dispath(setCurrentUser(user))
+});
 
-export default App;
+export default connect(null, mapDispatchToProps)(App);
