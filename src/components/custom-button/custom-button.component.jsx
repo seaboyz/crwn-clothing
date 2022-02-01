@@ -1,9 +1,14 @@
 import './custom-button.styles.scss';
 
-const CustomButton = ({ children, ...props }) => (
-	<button className='custom-button' {...props}>
-		{children}
-	</button>
-);
+const CustomButton = ({ children, inverted, ...props }) => {
+	return (
+		<button
+			className={`custom-button ${inverted ? 'inverted' : ''}`}
+			{...props}
+		>
+			{children}
+		</button>
+	);
+};
 
 export default CustomButton;
