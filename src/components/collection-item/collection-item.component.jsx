@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { addItem } from '../../redux/cart/cart.actions';
+import { addItem } from '../../redux/cart/cart.slice.js';
 import CustomButton from '../custom-button/custom-button.component';
 import './collection-item.styles.scss';
 

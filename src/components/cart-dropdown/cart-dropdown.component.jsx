@@ -6,7 +6,7 @@ import { selectCartItems } from '../../redux/cart/cart.selector';
 import { createStructuredSelector } from 'reselect';
 import { isEmpty } from 'ramda';
 import { useNavigate } from 'react-router-dom';
-import { toggleCartHidden } from '../../redux/cart/cart.actions.js';
+import { toggleCartHidden } from '../../redux/cart/cart.slice.js';
 
 const CartDropdown = ({ cartItems, toggleCartHidden }) => {
 	const navigate = useNavigate();

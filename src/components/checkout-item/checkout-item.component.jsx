@@ -3,7 +3,7 @@ import {
 	decQuantity,
 	incQuantity,
 	removeItem
-} from '../../redux/cart/cart.actions';
+} from '../../redux/cart/cart.slice.js';
 import './checkout-item.styles.scss';
 
 const CheckOutItem = ({ item, removeItem, incQuantity, decQuantity }) => (

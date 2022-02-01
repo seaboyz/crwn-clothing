@@ -8,7 +8,7 @@ import { auth, createUserProfileDocument } from './firebase/firebase.util';
 import { Component } from 'react';
 import { getDoc } from 'firebase/firestore';
 import { connect } from 'react-redux';
-import { setCurrentUser } from './redux/user/user.actions';
+import { setCurrentUser } from './redux/user/user.slice';
 import { selectCurrentUser } from './redux/user/user.selectors';
 import { createStructuredSelector } from 'reselect';
 import CheckOutPage from './pages/checkout/checkout.page';
