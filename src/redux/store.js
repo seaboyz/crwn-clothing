@@ -3,6 +3,6 @@ import logger from 'redux-logger';
 import rootReducer from './root.reducer';
 
 export default configureStore({
-	reducer: rootReducer
+	reducer: rootReducer,
 	middleware: [logger]
 });
