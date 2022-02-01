@@ -10,3 +10,8 @@ export const selectCartItems = createSelector(
 export const selectCartItemsCount = createSelector(selectCartItems, cartItems =>
 	cartItems.reduce((acc, cur) => acc + cur.quantity, 0)
 );
+
+export const selectCartDropDownHidden = createSelector(
+	selectCart,
+	cart => cart.hidden
+);
