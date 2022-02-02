@@ -32,7 +32,7 @@ const App = ({ setCurrentUser }) => {
 		};
 		const unsubscribeFromAuth = auth.onAuthStateChanged(handleStatusChange);
 		return () => unsubscribeFromAuth();
-	});
+	}, [setCurrentUser]);
 
 	return (
 		<div className='App'>
