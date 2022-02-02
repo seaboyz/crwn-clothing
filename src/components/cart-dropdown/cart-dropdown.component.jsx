@@ -1,15 +1,19 @@
 import './cart-dropdown.styles.scss';
 import CustomButton from '../custom-button/custom-button.component';
-import { connect } from 'react-redux';
+
 import CartItem from '../cart-item/cart-item.component';
 import { selectCartItems } from '../../redux/cart/cart.selector';
-import { createStructuredSelector } from 'reselect';
+
 import { isEmpty } from 'ramda';
 import { useNavigate } from 'react-router-dom';
 import { toggleCartHidden } from '../../redux/cart/cart.slice.js';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-const CartDropdown = ({ cartItems, toggleCartHidden }) => {
+const CartDropdown = () => {
+	const cartItems = useSelector(selectCartItems);
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	return (
 		<div className='cart-dropdown'>
 			{isEmpty(cartItems) ? (
@@ -24,7 +28,7 @@ const CartDropdown = ({ cartItems, toggleCartHidden }) => {
 			<CustomButton
 				onClick={() => {
 					navigate('/checkout');
-					toggleCartHidden();
+					dispatch(toggleCartHidden());
 				}}
 			>
 				go to checkout
@@ -32,11 +36,5 @@ const CartDropdown = ({ cartItems, toggleCartHidden }) => {
 		</div>
 	);
 };
-const mapStateToProps = createStructuredSelector({
-	cartItems: selectCartItems
-});
-const mapDispatchToProps = dispatch => ({
-	toggleCartHidden: () => dispatch(toggleCartHidden())
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(CartDropdown);
+export default CartDropdown;
