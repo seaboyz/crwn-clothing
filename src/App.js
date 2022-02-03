@@ -4,13 +4,13 @@ import Header from './components/header/header.component';
 import HomePage from './pages/home/homepage.component.jsx';
 import ShopPage from './pages/shop/shop.page.jsx';
 import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.page.jsx';
+import CheckOutPage from './pages/checkout/checkout.page';
 import { auth, createUserProfileDocument } from './firebase/firebase.util';
 import { useEffect } from 'react';
 import { getDoc } from 'firebase/firestore';
 import { useDispatch } from 'react-redux';
 import { setCurrentUser } from './redux/user/user.slice';
-
-import CheckOutPage from './pages/checkout/checkout.page';
+import CollectionPage from './pages/collection/collection.page';
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -41,6 +41,7 @@ const App = () => {
 			<Routes>
 				<Route path='/' element={<HomePage />} />
 				<Route path='/shop' element={<ShopPage />} />
+				<Route path='/shop/:category' element={<CollectionPage />} />
 				<Route path='/signin' element={<SignInAndSignUp />} />
 				<Route path='/checkout' element={<CheckOutPage />} />
 				<Route path='*' element={<HomePage />} />

@@ -6,7 +6,9 @@ import { persistStore } from 'redux-persist';
 
 const store = configureStore({
 	reducer: persistedReducer,
-	middleware: [logger]
+	middleware: [
+		/* logger */
+	]
 });
 
 export const persistor = persistStore(store);
