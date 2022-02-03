@@ -8,7 +8,7 @@ const CollectionOverView = () => {
 
 	return (
 		<div className='shop-page'>
-			{collections.map(({ id, ...props }) => (
+			{Object.values(collections).map(({ id, ...props }) => (
 				<CollectionPreview key={id} {...props} />
 			))}
 		</div>
