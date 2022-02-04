@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { assoc } from 'ramda';
 
 const initialState = {
 	hidden: true,
@@ -20,8 +21,8 @@ const slice = createSlice({
 			if (foundItem) {
 				foundItem.quantity += 1;
 			} else {
-				action.payload.quantity = 1;
-				state.cartItems.push(action.payload);
+				const item = assoc('quantity', 1, action.payload);
+				state.cartItems.push(item);
 			}
 		},
 
