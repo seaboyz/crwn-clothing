@@ -37,6 +37,14 @@ const CheckOutPage = () => {
 			<div className='total'>
 				<span>Total: ${totalPrice}</span>
 			</div>
+			<div style={{ color: 'red', textAlign: 'center' }}>
+				<h2 style={{ fontSize: '1.5rem' }}>
+					* Plsese use the following test credit card from payments*
+				</h2>
+				<p style={{ fontSize: '1.5rem' }}>
+					4242 4242 4242 4242 -- Exp: 01/25 -- CVV: 123
+				</p>
+			</div>
 			<StripeCheckoutButton />
 		</div>
 	);
