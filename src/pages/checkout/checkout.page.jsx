@@ -5,6 +5,7 @@ import {
 } from '../../redux/cart/cart.selector.js';
 import CheckOutItem from '../../components/checkout-item/checkout-item.component';
 import { useSelector } from 'react-redux';
+import StripeCheckoutButton from '../../components/stripe-button/stripe-button.component';
 
 const CheckOutPage = () => {
 	const cartItems = useSelector(selectCartItems);
@@ -36,6 +37,7 @@ const CheckOutPage = () => {
 			<div className='total'>
 				<span>Total: ${totalPrice}</span>
 			</div>
+			<StripeCheckoutButton />
 		</div>
 	);
 };
