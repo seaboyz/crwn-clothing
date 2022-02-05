@@ -17,15 +17,19 @@ const App = () => {
 
 	useEffect(() => {
 		const handleStatusChange = async user => {
+			// if !login || !signup
 			if (!user) {
 				dispatch(setCurrentUser(null));
 				return;
 			}
+			// if login || signup
 			try {
+				// todo:abstract the following to db.users.save() function
+				// save login user to db
 				const userRef = await createUserProfileDocument(user);
+				// get user from the db
 				const userSnap = await getDoc(userRef);
 				if (!userSnap.exists()) return;
-
 				dispatch(setCurrentUser({ id: userSnap.id, ...userSnap.data() }));
 			} catch (error) {
 				console.log('fail to get user info', error.message);
