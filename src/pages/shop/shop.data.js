@@ -246,4 +246,15 @@ const SHOP_DATA = [
 	}
 ];
 
+export const items = SHOP_DATA.map(_ =>
+	_.items.map(item => {
+		item.categaory = _.routeName;
+		return item;
+	})
+)
+	.reduce((items, collection) => {
+		return [...items, ...collection];
+	}, [])
+	.map(({ id, ...rest }) => ({ ...rest })); //?
+
 export default SHOP_DATA;

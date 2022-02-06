@@ -6,7 +6,14 @@ import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword
 } from 'firebase/auth';
-import { doc, getDoc, getFirestore, setDoc } from 'firebase/firestore';
+import {
+	collection,
+	doc,
+	getDoc,
+	getFirestore,
+	setDoc,
+	writeBatch
+} from 'firebase/firestore';
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyCMSyTGEbmnOfhmdcJE1VEPSYBfEJb771s',
@@ -70,5 +77,12 @@ export const signUp = async (email, password, firstname, lastname) => {
 
 export const signIn = (email, password) =>
 	signInWithEmailAndPassword(auth, email, password);
+
+export const addCollectionAndDocuments = (collectionsKey, documents) => {
+	const batch = writeBatch(db);
+	const collectionRef = collection(db, collectionsKey);
+	documents.forEach(document => batch.set(doc(collectionRef), document));
+	return batch.commit();
+};
 
 export default app;
