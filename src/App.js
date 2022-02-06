@@ -7,15 +7,22 @@ import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.pag
 import CheckOutPage from './pages/checkout/checkout.page';
 import { auth, createUserProfileDocument } from './firebase/firebase.util';
 import { useEffect } from 'react';
-import { getDoc } from 'firebase/firestore';
+import { getDoc, onSnapshot } from 'firebase/firestore';
 import { useDispatch } from 'react-redux';
 import { setCurrentUser } from './redux/user/user.slice';
 import CollectionPage from './pages/collection/collection.page';
 
+import SHOP_DATA from './pages/shop/shop.data';
+
 const App = () => {
 	const dispatch = useDispatch();
+	const collections = SHOP_DATA.map(({ title, items }) => ({
+		title,
+		items
+	}));
 
 	useEffect(() => {
+		let unsubscribeFromUser;
 		const handleStatusChange = async user => {
 			// if !login || !signup
 			if (!user) {
@@ -28,16 +35,19 @@ const App = () => {
 				// save login user to db
 				const userRef = await createUserProfileDocument(user);
 				// get user from the db
-				const userSnap = await getDoc(userRef);
-				if (!userSnap.exists()) return;
-				dispatch(setCurrentUser({ id: userSnap.id, ...userSnap.data() }));
+				unsubscribeFromUser = onSnapshot(userRef, doc =>
+					dispatch(setCurrentUser({ id: doc.id, ...doc.data() }))
+				);
 			} catch (error) {
-				console.log('fail to get user info', error.message);
+				console.log('fail to get user info', error);
 			}
 		};
 		const unsubscribeFromAuth = auth.onAuthStateChanged(handleStatusChange);
-		return () => unsubscribeFromAuth();
-	}, [dispatch]);
+		return () => {
+			unsubscribeFromAuth();
+			unsubscribeFromUser();
+		};
+	}, [dispatch, collections]);
 
 	return (
 		<div className='App'>
