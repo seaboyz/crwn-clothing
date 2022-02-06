@@ -246,9 +246,10 @@ const SHOP_DATA = [
 	}
 ];
 
-export const collections = SHOP_DATA.map(_ => ({
-	name: _.routeName,
-	items: _.items
+export const collections = SHOP_DATA.map(({ title, routeName, items }) => ({
+	title,
+	routeName,
+	items
 }));
 
 export const items = SHOP_DATA.map(_ =>

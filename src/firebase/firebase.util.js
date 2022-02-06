@@ -10,7 +10,9 @@ import {
 	collection,
 	doc,
 	getDoc,
+	getDocs,
 	getFirestore,
+	query,
 	setDoc,
 	writeBatch
 } from 'firebase/firestore';
@@ -83,6 +85,14 @@ export const addCollectionAndDocuments = (collectionsKey, documents) => {
 	const collectionRef = collection(db, collectionsKey);
 	documents.forEach(document => batch.set(doc(collectionRef), document));
 	return batch.commit();
+};
+
+export const getShopData = async () => {
+	const q = query(collection(db, 'collections'));
+	const querySnapshot = await getDocs(q);
+	const collections = [];
+	querySnapshot.forEach(doc => collections.push({ id: doc.id, ...doc.data() }));
+	return collections;
 };
 
 export default app;
