@@ -12,4 +12,10 @@ const WithSpinner =
 		);
 	};
 
+export const Spinner = () => (
+	<SpinnerOverlay>
+		<SpinnerContainer />
+	</SpinnerOverlay>
+);
+
 export default WithSpinner;
