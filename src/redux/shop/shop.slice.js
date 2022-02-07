@@ -1,5 +1,4 @@
-import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getShopData } from '../../firebase/firebase.util';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
 	collections: [],

@@ -1,4 +1,4 @@
-import { takeEvery, put, call } from 'redux-saga/effects';
+import { takeLatest, put, call } from 'redux-saga/effects';
 import { getShopData } from '../../firebase/firebase.util';
 import {
 	fetchShopData,
@@ -7,10 +7,10 @@ import {
 } from '../shop/shop.slice';
 
 export function* startFetchShopData() {
-	yield takeEvery(fetchShopData.type, handleFetchShopData);
+	yield takeLatest(fetchShopData.type, onStartFetchShopData);
 }
 
-export function* handleFetchShopData() {
+export function* onStartFetchShopData() {
 	try {
 		const data = yield call(getShopData);
 		yield put(fetchShopDataSuccess(data));
