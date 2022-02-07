@@ -95,4 +95,12 @@ export const getShopData = async () => {
 	return collections;
 };
 
+export const getDirectory = async () => {
+	const q = query(collection(db, 'categories'));
+	const querySnapshot = await getDocs(q);
+	const directory = [];
+	querySnapshot.forEach(doc => directory.push({ id: doc.id, ...doc.data() }));
+	return directory;
+};
+
 export default app;
