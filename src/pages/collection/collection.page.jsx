@@ -19,15 +19,11 @@ const CollectionPage = () => {
 		dispatch(fetchShopData());
 	}, [dispatch]);
 
-	if (status === 'loading') {
-		return <Spinner />;
-	}
-
-	if (!collection) {
-		return <Navigate to='/' />;
-	}
-
-	return (
+	return status === 'loading' ? (
+		<Spinner />
+	) : !collection ? (
+		<Navigate to='/' />
+	) : (
 		<div className='collection-page'>
 			<h2 className='title'>{collection.title}</h2>
 			<div className='items'>
