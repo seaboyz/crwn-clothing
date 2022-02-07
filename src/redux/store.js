@@ -4,8 +4,12 @@ import { persistedReducer } from './root.reducer';
 
 import { persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
+import { startFetchShopData } from './shop/shop.saga';
 
-const middleware = [thunk];
+const sagaMiddleware = createSagaMiddleware();
+
+const middleware = [thunk, sagaMiddleware];
 
 if (process.env.NODE_ENV === 'development') {
 	middleware.push(logger);
@@ -15,6 +19,8 @@ const store = configureStore({
 	reducer: persistedReducer,
 	middleware
 });
+
+sagaMiddleware.run(startFetchShopData);
 
 export const persistor = persistStore(store);
 
