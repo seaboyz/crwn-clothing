@@ -35,7 +35,17 @@ export const auth = getAuth();
 
 export const db = getFirestore();
 
-export const signInWithGoogle = () => signInWithPopup(auth, provider);
+export const signInWithGoogle = async () => {
+	try {
+		const result = await signInWithPopup(auth, provider);
+		const userRef = await createUserProfileDocument(result.user);
+		const userSnap = await getDoc(userRef);
+		const userInfo = { id: userSnap.id, ...userSnap.data() };
+		return userInfo;
+	} catch (error) {
+		throw error;
+	}
+};
 
 export const createUserProfileDocument = async (userAuth, addtionalData) => {
 	if (!userAuth) return;
