@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getShopData } from '../../firebase/firebase.util';
 
 const initialState = {
@@ -15,20 +15,22 @@ const initialState = {
 const shopSlice = createSlice({
 	name: 'shop',
 	initialState,
-	reducers: { fetchShopData() {} }
-	// extraReducers: builder => {
-	// 	builder.addCase(fetchShopData.pending, state => {
-	// 		state.status = 'loading';
-	// 	});
-	// 	builder.addCase(fetchShopData.fulfilled, (state, action) => {
-	// 		state.status = 'succeeded';
-	// 		state.collections = action.payload;
-	// 	});
-	// 	builder.addCase(fetchShopData.rejected, (state, action) => {
-	// 		state.status = 'failed';
-	// 		state.error = action.error.message;
-	// 	});
-	// }
+	reducers: {
+		fetchShopData(state) {
+			if (state.status === 'idle') {
+				state.status = 'loading';
+			}
+		},
+		fetchShopDataSuccess(state, action) {
+			state.status = 'succeeded';
+			state.collections = action.payload;
+		},
+		fetchShopDataFailed(state, action) {
+			state.status = 'failed';
+			state.error = action.error.message;
+		}
+	}
 });
-export const { fetchShopData } = shopSlice.actions;
 export default shopSlice.reducer;
+export const { fetchShopData, fetchShopDataSuccess, fetchShopDataFailed } =
+	shopSlice.actions;
