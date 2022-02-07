@@ -7,7 +7,7 @@ import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.pag
 import CheckOutPage from './pages/checkout/checkout.page';
 import { auth, createUserProfileDocument } from './firebase/firebase.util';
 import { useEffect } from 'react';
-import { getDoc, onSnapshot } from 'firebase/firestore';
+import { onSnapshot } from 'firebase/firestore';
 import { useDispatch } from 'react-redux';
 import { setCurrentUser } from './redux/user/user.slice';
 import CollectionPage from './pages/collection/collection.page';
