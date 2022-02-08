@@ -6,7 +6,7 @@ import {
 	selectSections,
 	selectStatus
 } from '../../redux/directory/directory.selector.js';
-import { fetchDirectory } from '../../redux/directory/directory.slice.js';
+import { fetchDirectoryStart } from '../../redux/directory/directory.slice.js';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { Spinner } from '../with-spinner/with-spiner.component';
@@ -22,7 +22,7 @@ const Directory = () => {
 	const status = useSelector(selectStatus);
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch(fetchDirectory());
+		dispatch(fetchDirectoryStart());
 	}, [dispatch]);
 
 	return status === 'loading' ? (

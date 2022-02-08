@@ -26,7 +26,7 @@ const shopSlice = createSlice({
 		},
 		fetchShopDataFailed(state, action) {
 			state.status = 'failed';
-			state.error = action.error.message;
+			state.error = action.payload.message;
 		}
 	}
 });
