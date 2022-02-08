@@ -92,8 +92,10 @@ export const signUp = async (email, password, firstname, lastname) => {
 		const user = userCredential.user;
 		const displayName = `${firstname} ${lastname}`;
 		// save user to db
-		await createUserProfileDocument(user, { displayName });
-		return user;
+		const userRef = await createUserProfileDocument(user, { displayName });
+		const userSnap = await getDoc(userRef);
+		const userInfo = { id: userSnap.id, ...userSnap.data() };
+		return userInfo;
 	} catch (error) {
 		console.log('fail to create a user ', error.message);
 		throw error;

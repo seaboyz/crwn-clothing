@@ -6,12 +6,14 @@ import {
 	signInWithGoogleStart,
 	signInWithWithEmailAndPasswordStart,
 	signOutStart,
-	signOutSuccess
+	signOutSuccess,
+	signUpStart
 } from './user.slice.js';
 import {
 	getCurrentUser,
 	signInWithEmail,
 	signInWithGoogle,
+	signUp,
 	userSignOut
 } from '../../firebase/firebase.util';
 
@@ -20,7 +22,8 @@ export function* userSagas() {
 		watchSignInWithEmailStart(),
 		watchSignInWithGoogleStart(),
 		watchCheckUserSessionStart(),
-		watchSignOutStart()
+		watchSignOutStart(),
+		watchSignUpStart()
 	]);
 }
 
@@ -78,6 +81,23 @@ function* startUserSignOut() {
 	try {
 		yield userSignOut();
 		yield put(signOutSuccess());
+	} catch (error) {
+		yield put(signInFailed(error));
+	}
+}
+
+function* watchSignUpStart() {
+	yield takeLatest(signUpStart.type, onSignUpStart);
+}
+
+function* onSignUpStart(action) {
+	try {
+		const {
+			payload: { firstname, lastname, email, password }
+		} = action;
+		const user = yield signUp(email, password, firstname, lastname);
+		if (!user) return;
+		yield put(signInSuccess(user));
 	} catch (error) {
 		yield put(signInFailed(error));
 	}

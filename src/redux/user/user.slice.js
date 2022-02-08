@@ -32,7 +32,10 @@ export const slice = createSlice({
 			state.status = 'failed';
 			state.error = action.payload.message;
 		},
-		checkUserSessionStart() {}
+		checkUserSessionStart() {},
+		signUpStart(state) {
+			state.status = 'loading';
+		}
 	}
 });
 
@@ -45,7 +48,8 @@ export const {
 	checkUserSessionStart,
 	signOutStart,
 	signOUtFailed,
-	signOutSuccess
+	signOutSuccess,
+	signUpStart
 } = slice.actions;
 
 export default slice.reducer;
