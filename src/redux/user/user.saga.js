@@ -10,11 +10,15 @@ import {
 	signInWithGoogle
 } from '../../firebase/firebase.util';
 
-export function* startSignInWithGoogle() {
-	yield takeLatest(signInWithGoogleStart.type, onStartSignInWithGoogle);
+export function* userSagas() {
+	yield all([watchStartSignInWithEmail(), watchStartSignInWithGoogle()]);
 }
 
-function* onStartSignInWithGoogle() {
+function* watchStartSignInWithGoogle() {
+	yield takeLatest(signInWithGoogleStart.type, startSignInWithGoogle);
+}
+
+function* startSignInWithGoogle() {
 	try {
 		const user = yield call(signInWithGoogle);
 		yield put(signInSuccess(user));
@@ -23,14 +27,14 @@ function* onStartSignInWithGoogle() {
 	}
 }
 
-export function* startSignInWithEmail() {
+function* watchStartSignInWithEmail() {
 	yield takeLatest(
 		signInWithWithEmailAndPasswordStart.type,
-		onStartSignInwithEmail
+		startSignInwithEmail
 	);
 }
 
-function* onStartSignInwithEmail(action) {
+function* startSignInwithEmail(action) {
 	try {
 		const {
 			payload: { email, password }
@@ -40,8 +44,4 @@ function* onStartSignInwithEmail(action) {
 	} catch (error) {
 		yield put(signInFailed(error));
 	}
-}
-
-export function* userSagas() {
-	yield all([startSignInWithGoogle(), startSignInWithEmail()]);
 }

@@ -15,7 +15,7 @@ const shopSlice = createSlice({
 	name: 'shop',
 	initialState,
 	reducers: {
-		fetchShopData(state) {
+		fetchShopDataStart(state) {
 			if (state.status === 'idle') {
 				state.status = 'loading';
 			}
@@ -31,5 +31,5 @@ const shopSlice = createSlice({
 	}
 });
 export default shopSlice.reducer;
-export const { fetchShopData, fetchShopDataSuccess, fetchShopDataFailed } =
+export const { fetchShopDataStart, fetchShopDataSuccess, fetchShopDataFailed } =
 	shopSlice.actions;

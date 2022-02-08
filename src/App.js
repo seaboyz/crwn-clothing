@@ -6,8 +6,15 @@ import ShopPage from './pages/shop/shop.page.jsx';
 import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.page.jsx';
 import CheckOutPage from './pages/checkout/checkout.page';
 import CollectionPage from './pages/collection/collection.page';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { checkUserSession } from './redux/user/user.slice';
 
 const App = () => {
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(checkUserSession());
+	}, [dispatch]);
 	return (
 		<div className='App'>
 			<Header />

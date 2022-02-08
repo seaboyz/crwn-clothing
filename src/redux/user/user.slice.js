@@ -29,7 +29,8 @@ export const slice = createSlice({
 		signOut(state) {
 			state.status = 'idle';
 			state.currentUser = null;
-		}
+		},
+		checkUserSession(state) {}
 	}
 });
 
@@ -39,7 +40,8 @@ export const {
 	signInWithWithEmailAndPasswordStart,
 	signInSuccess,
 	signInFailed,
-	signOut
+	signOut,
+	checkUserSession
 } = slice.actions;
 
 export default slice.reducer;

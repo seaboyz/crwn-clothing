@@ -13,10 +13,13 @@ import {
 	OptionsContainer,
 	OptionLink
 } from './header.styles';
+import { useDispatch } from 'react-redux';
+import { signOut } from '../../redux/user/user.slice';
 
 const Header = () => {
 	const currentUser = useSelector(selectCurrentUser);
 	const hidden = useSelector(selectCartDropDownHidden);
+	const dispatch = useDispatch();
 	return (
 		<HeaderContainer>
 			<LogoContainer to='/'>
@@ -31,7 +34,7 @@ const Header = () => {
 						as={'div'}
 						onClick={() => {
 							console.log('sign out');
-							auth.signOut();
+							dispatch(signOut());
 						}}
 						to='/signout'
 					>
