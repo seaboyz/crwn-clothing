@@ -1,11 +1,13 @@
-import { Component, useState } from 'react';
+import { useState } from 'react';
 import './sign-in.styles.scss';
 import FormInput from '../../components/form-input/form-input.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
-import { signIn, signInWithGoogle } from '../../firebase/firebase.util.js';
 import GoogleButton from 'react-google-button';
 import { useDispatch } from 'react-redux';
-import { signInWithGoogleStart } from '../../redux/user/user.slice';
+import {
+	signInWithGoogleStart,
+	signInWithWithEmailAndPasswordStart
+} from '../../redux/user/user.slice';
 
 const SignIn = () => {
 	const [email, setEmail] = useState('');
@@ -15,7 +17,12 @@ const SignIn = () => {
 		<div className='sign-in'>
 			<h2 className='title'>I already have an account</h2>
 			<span>Sign in with your eamil and password</span>
-			<form onSubmit={() => disPatch({ email, password })}>
+			<form
+				onSubmit={e => {
+					e.preventDefault();
+					disPatch(signInWithWithEmailAndPasswordStart({ email, password }));
+				}}
+			>
 				<FormInput
 					label='email'
 					type='email'

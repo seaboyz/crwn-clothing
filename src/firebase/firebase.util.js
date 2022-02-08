@@ -47,6 +47,18 @@ export const signInWithGoogle = async () => {
 	}
 };
 
+export const signIn = async (email, password) => {
+	try {
+		const result = await signInWithEmailAndPassword(auth, email, password);
+		const userRef = await createUserProfileDocument(result.user);
+		const userSnap = await getDoc(userRef);
+		const userInfo = { id: userSnap.id, ...userSnap.data() };
+		return userInfo;
+	} catch (error) {
+		throw error;
+	}
+};
+
 export const createUserProfileDocument = async (userAuth, addtionalData) => {
 	if (!userAuth) return;
 	const userRef = doc(db, 'users', userAuth.uid);
@@ -86,9 +98,6 @@ export const signUp = async (email, password, firstname, lastname) => {
 		throw error;
 	}
 };
-
-export const signIn = (email, password) =>
-	signInWithEmailAndPassword(auth, email, password);
 
 export const addCollectionAndDocuments = (collectionsKey, documents) => {
 	const batch = writeBatch(db);

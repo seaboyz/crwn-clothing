@@ -21,7 +21,7 @@ export const slice = createSlice({
 		},
 		signInWithGoogleFailed(state, action) {
 			state.status = 'failed';
-			state.error = action.error.message;
+			state.error = action.payload.message;
 		},
 		signInWithWithEmailAndPasswordStart(state, action) {
 			state.status = 'loading';
@@ -33,7 +33,7 @@ export const slice = createSlice({
 		},
 		signInWithWithEmailAndPasswordFailed(state, action) {
 			state.status = 'failed';
-			state.error = action.error.message;
+			state.error = action.payload.message;
 		}
 	}
 });
