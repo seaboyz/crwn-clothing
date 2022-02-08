@@ -25,7 +25,7 @@ const Directory = () => {
 		dispatch(fetchDirectoryStart());
 	}, [dispatch]);
 
-	return status === 'loading' ? (
+	return status === 'loading' || status === 'idle' ? (
 		<Spinner />
 	) : (
 		<div className='directory-menu'>

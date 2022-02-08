@@ -19,7 +19,7 @@ const ShopPage = () => {
 		}
 	}, [dispatch, status]);
 
-	return status === 'loading' ? (
+	return status === 'loading' || status === 'idle' ? (
 		<Spinner />
 	) : (
 		<div className='shop-page'>

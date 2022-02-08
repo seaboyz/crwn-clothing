@@ -19,7 +19,7 @@ const CollectionPage = () => {
 		dispatch(fetchShopDataStart());
 	}, [dispatch]);
 
-	return status === 'loading' ? (
+	return status === 'loading' || status === 'idle' ? (
 		<Spinner />
 	) : !collection ? (
 		<Navigate to='/' />

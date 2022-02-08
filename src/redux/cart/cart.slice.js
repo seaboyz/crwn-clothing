@@ -58,6 +58,10 @@ const slice = createSlice({
 			} else {
 				foundItem.quantity -= 1;
 			}
+		},
+
+		clearCart(state) {
+			state.cartItems = [];
 		}
 	}
 });
@@ -67,7 +71,8 @@ export const {
 	removeItem,
 	incQuantity,
 	decQuantity,
-	toggleCartHidden
+	toggleCartHidden,
+	clearCart
 } = slice.actions;
 
 export default slice.reducer;

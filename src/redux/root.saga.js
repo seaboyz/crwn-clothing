@@ -1,8 +1,15 @@
 import { all } from 'redux-saga/effects';
+import { cartSagas, watchSignOutSuccess } from './cart/cart.saga';
 import { directorySagas } from './directory/directory.saga';
 import { shopSagas } from './shop/shop.saga';
 import { userSagas } from './user/user.saga';
 
 export default function* rootSaga() {
-	yield all([shopSagas(), userSagas(), directorySagas()]);
+	yield all([
+		shopSagas(),
+		userSagas(),
+		directorySagas(),
+		// watchSignOutSuccess()
+		cartSagas()
+	]);
 }

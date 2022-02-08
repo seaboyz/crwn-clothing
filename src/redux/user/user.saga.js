@@ -7,7 +7,7 @@ import {
 	signInWithWithEmailAndPasswordStart,
 	signOutStart,
 	signOutSuccess
-} from '../../redux/user/user.slice';
+} from './user.slice.js';
 import {
 	getCurrentUser,
 	signInWithEmail,
