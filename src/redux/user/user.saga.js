@@ -1,26 +1,30 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 import {
-	checkUserSession,
+	checkUserSessionStart,
 	signInFailed,
 	signInSuccess,
 	signInWithGoogleStart,
-	signInWithWithEmailAndPasswordStart
+	signInWithWithEmailAndPasswordStart,
+	signOutStart,
+	signOutSuccess
 } from '../../redux/user/user.slice';
 import {
 	getCurrentUser,
 	signInWithEmail,
-	signInWithGoogle
+	signInWithGoogle,
+	userSignOut
 } from '../../firebase/firebase.util';
 
 export function* userSagas() {
 	yield all([
-		watchStartSignInWithEmail(),
-		watchStartSignInWithGoogle(),
-		watchCheckUserSession()
+		watchSignInWithEmailStart(),
+		watchSignInWithGoogleStart(),
+		watchCheckUserSessionStart(),
+		watchSignOutStart()
 	]);
 }
 
-function* watchStartSignInWithGoogle() {
+function* watchSignInWithGoogleStart() {
 	yield takeLatest(signInWithGoogleStart.type, startSignInWithGoogle);
 }
 
@@ -33,7 +37,7 @@ function* startSignInWithGoogle() {
 	}
 }
 
-function* watchStartSignInWithEmail() {
+function* watchSignInWithEmailStart() {
 	yield takeLatest(
 		signInWithWithEmailAndPasswordStart.type,
 		startSignInwithEmail
@@ -52,8 +56,8 @@ function* startSignInwithEmail(action) {
 	}
 }
 
-function* watchCheckUserSession() {
-	yield takeLatest(checkUserSession.type, startCheckUserSession);
+function* watchCheckUserSessionStart() {
+	yield takeLatest(checkUserSessionStart.type, startCheckUserSession);
 }
 
 function* startCheckUserSession() {
@@ -61,6 +65,19 @@ function* startCheckUserSession() {
 		const user = yield getCurrentUser();
 		if (!user) return;
 		yield put(signInSuccess(user));
+	} catch (error) {
+		yield put(signInFailed(error));
+	}
+}
+
+function* watchSignOutStart() {
+	yield takeLatest(signOutStart.type, startUserSignOut);
+}
+
+function* startUserSignOut() {
+	try {
+		yield userSignOut();
+		yield put(signOutSuccess());
 	} catch (error) {
 		yield put(signInFailed(error));
 	}

@@ -4,7 +4,8 @@ import {
 	signInWithPopup,
 	GoogleAuthProvider,
 	createUserWithEmailAndPassword,
-	signInWithEmailAndPassword
+	signInWithEmailAndPassword,
+	signOut
 } from 'firebase/auth';
 import {
 	collection,
@@ -129,5 +130,7 @@ export const getCurrentUser = () =>
 			resolve(user);
 		}, reject);
 	});
+
+export const userSignOut = () => signOut(auth);
 
 export default app;

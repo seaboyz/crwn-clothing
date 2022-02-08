@@ -8,12 +8,12 @@ import CheckOutPage from './pages/checkout/checkout.page';
 import CollectionPage from './pages/collection/collection.page';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { checkUserSession } from './redux/user/user.slice';
+import { checkUserSessionStart } from './redux/user/user.slice';
 
 const App = () => {
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch(checkUserSession());
+		dispatch(checkUserSessionStart());
 	}, [dispatch]);
 	return (
 		<div className='App'>

@@ -1,6 +1,5 @@
 import './header.styles.scss';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
-import { auth } from '../../firebase/firebase.util';
 import CartIcon from '../cart-icon/cart-icon.component';
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 import { selectCartDropDownHidden } from '../../redux/cart/cart.selector';
@@ -14,7 +13,7 @@ import {
 	OptionLink
 } from './header.styles';
 import { useDispatch } from 'react-redux';
-import { signOut } from '../../redux/user/user.slice';
+import { signOutStart } from '../../redux/user/user.slice';
 
 const Header = () => {
 	const currentUser = useSelector(selectCurrentUser);
@@ -34,7 +33,7 @@ const Header = () => {
 						as={'div'}
 						onClick={() => {
 							console.log('sign out');
-							dispatch(signOut());
+							dispatch(signOutStart());
 						}}
 						to='/signout'
 					>

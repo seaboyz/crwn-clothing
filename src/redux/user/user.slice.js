@@ -8,13 +8,10 @@ export const slice = createSlice({
 		error: null
 	},
 	reducers: {
-		setCurrentUser(state, action) {
-			state.currentUser = action.payload;
-		},
-		signInWithGoogleStart(state, action) {
+		signInWithGoogleStart(state) {
 			state.status = 'loading';
 		},
-		signInWithWithEmailAndPasswordStart(state, action) {
+		signInWithWithEmailAndPasswordStart(state) {
 			state.status = 'loading';
 		},
 		signInSuccess(state, action) {
@@ -26,11 +23,16 @@ export const slice = createSlice({
 			state.status = 'failed';
 			state.error = action.payload.message;
 		},
-		signOut(state) {
-			state.status = 'idle';
+		signOutStart() {},
+		signOutSuccess(state) {
+			state.status = 'succeeded';
 			state.currentUser = null;
 		},
-		checkUserSession() {}
+		signOUtFailed(state, action) {
+			state.status = 'failed';
+			state.error = action.payload.message;
+		},
+		checkUserSessionStart() {}
 	}
 });
 
@@ -40,8 +42,10 @@ export const {
 	signInWithWithEmailAndPasswordStart,
 	signInSuccess,
 	signInFailed,
-	signOut,
-	checkUserSession
+	checkUserSessionStart,
+	signOutStart,
+	signOUtFailed,
+	signOutSuccess
 } = slice.actions;
 
 export default slice.reducer;
