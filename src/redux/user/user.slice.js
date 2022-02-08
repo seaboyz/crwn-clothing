@@ -30,7 +30,7 @@ export const slice = createSlice({
 			state.status = 'idle';
 			state.currentUser = null;
 		},
-		checkUserSession(state) {}
+		checkUserSession() {}
 	}
 });
 
