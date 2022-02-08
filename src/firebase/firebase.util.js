@@ -47,7 +47,7 @@ export const signInWithGoogle = async () => {
 	}
 };
 
-export const signIn = async (email, password) => {
+export const signInWithEmail = async (email, password) => {
 	try {
 		const result = await signInWithEmailAndPassword(auth, email, password);
 		const userRef = await createUserProfileDocument(result.user);

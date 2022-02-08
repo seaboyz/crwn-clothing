@@ -14,26 +14,21 @@ export const slice = createSlice({
 		signInWithGoogleStart(state, action) {
 			state.status = 'loading';
 		},
-		signInWithGoogleSuccess(state, action) {
-			state.status = 'succeeded';
-			state.error = null;
-			state.currentUser = action.payload;
-		},
-		signInWithGoogleFailed(state, action) {
-			state.status = 'failed';
-			state.error = action.payload.message;
-		},
 		signInWithWithEmailAndPasswordStart(state, action) {
 			state.status = 'loading';
 		},
-		signInWithWithEmailAndPasswordSuccess(state, action) {
+		signInSuccess(state, action) {
 			state.status = 'succeeded';
 			state.error = null;
 			state.currentUser = action.payload;
 		},
-		signInWithWithEmailAndPasswordFailed(state, action) {
+		signInFailed(state, action) {
 			state.status = 'failed';
 			state.error = action.payload.message;
+		},
+		signOut(state) {
+			state.status = 'idle';
+			state.currentUser = null;
 		}
 	}
 });
@@ -41,11 +36,10 @@ export const slice = createSlice({
 export const {
 	setCurrentUser,
 	signInWithGoogleStart,
-	signInWithGoogleSuccess,
-	signInWithGoogleFailed,
 	signInWithWithEmailAndPasswordStart,
-	signInWithWithEmailAndPasswordSuccess,
-	signInWithWithEmailAndPasswordFailed
+	signInSuccess,
+	signInFailed,
+	signOut
 } = slice.actions;
 
 export default slice.reducer;

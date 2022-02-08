@@ -1,24 +1,25 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
 import {
-	signInWithWithEmailAndPasswordStart,
-	signInWithWithEmailAndPasswordSuccess,
-	signInWithWithEmailAndPasswordFailed,
+	signInFailed,
+	signInSuccess,
 	signInWithGoogleStart,
-	signInWithGoogleFailed,
-	signInWithGoogleSuccess
+	signInWithWithEmailAndPasswordStart
 } from '../../redux/user/user.slice';
-import { signIn, signInWithGoogle } from '../../firebase/firebase.util';
+import {
+	signInWithEmail,
+	signInWithGoogle
+} from '../../firebase/firebase.util';
 
 export function* startSignInWithGoogle() {
 	yield takeLatest(signInWithGoogleStart.type, onStartSignInWithGoogle);
 }
 
-export function* onStartSignInWithGoogle() {
+function* onStartSignInWithGoogle() {
 	try {
 		const user = yield call(signInWithGoogle);
-		yield put(signInWithGoogleSuccess(user));
+		yield put(signInSuccess(user));
 	} catch (error) {
-		yield put(signInWithGoogleFailed(error));
+		yield put(signInFailed(error));
 	}
 }
 
@@ -29,15 +30,15 @@ export function* startSignInWithEmail() {
 	);
 }
 
-export function* onStartSignInwithEmail(action) {
+function* onStartSignInwithEmail(action) {
 	try {
 		const {
 			payload: { email, password }
 		} = action;
-		const user = yield call(signIn, email, password);
-		yield put(signInWithWithEmailAndPasswordSuccess(user));
+		const user = yield call(signInWithEmail, email, password);
+		yield put(signInSuccess(user));
 	} catch (error) {
-		yield put(signInWithWithEmailAndPasswordFailed(error));
+		yield put(signInFailed(error));
 	}
 }
 
