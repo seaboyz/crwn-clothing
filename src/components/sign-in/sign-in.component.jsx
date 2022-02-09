@@ -10,9 +10,17 @@ import {
 } from '../../redux/user/user.slice';
 
 const SignIn = () => {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
 	const disPatch = useDispatch();
+	const [userCredentials, setuserCredentials] = useState({
+		email: '',
+		password: ''
+	});
+	const { email, password } = userCredentials;
+	const handleChange = e => {
+		const { value, name } = e.target;
+		setuserCredentials({ ...userCredentials, [name]: value });
+	};
+
 	return (
 		<div className='sign-in'>
 			<h2 className='title'>I already have an account</h2>
@@ -27,7 +35,7 @@ const SignIn = () => {
 					label='email'
 					type='email'
 					name='email'
-					handleChange={e => setEmail(e.target.value)}
+					handleChange={handleChange}
 					value={email}
 					required
 				/>
@@ -35,7 +43,7 @@ const SignIn = () => {
 					label='password'
 					name='password'
 					type='password'
-					handleChange={e => setPassword(e.target.value)}
+					handleChange={handleChange}
 					value={password}
 					required
 				/>

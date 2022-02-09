@@ -6,14 +6,20 @@ import './sign-up.styles.scss';
 import { signUpStart } from '../../redux/user/user.slice.js';
 
 const SignUp = () => {
-	const [firstname, setFirstname] = useState('');
-	const [lastname, setLastname] = useState('');
-	const [email, setEmail] = useState('');
-	const [password, setPassWord] = useState('');
-	const [confirmPassword, setConfirmPassword] = useState('');
-	const dispatch = useDispatch(
-		signUpStart({ firstname, lastname, email, password })
-	);
+	const dispatch = useDispatch();
+	const [userCredentials, setUserCredentials] = useState({
+		firstname: '',
+		lastname: '',
+		email: '',
+		password: '',
+		confirmPassword: ''
+	});
+	const handleChange = e => {
+		const { name, value } = e.target;
+		setUserCredentials({ ...userCredentials, [name]: value });
+	};
+	const { firstname, lastname, email, password, confirmPassword } =
+		userCredentials;
 	return (
 		<div className='sign-up'>
 			<h2 className='title'>I am new</h2>
@@ -28,7 +34,7 @@ const SignUp = () => {
 					label='first name'
 					type='text'
 					name='firstname'
-					handleChange={e => setFirstname(e.target.value)}
+					handleChange={handleChange}
 					value={firstname}
 					required
 				/>
@@ -36,7 +42,7 @@ const SignUp = () => {
 					label='last name'
 					type='text'
 					name='lastname'
-					handleChange={e => setLastname(e.target.value)}
+					handleChange={handleChange}
 					value={lastname}
 					required
 				/>
@@ -44,7 +50,7 @@ const SignUp = () => {
 					label='email'
 					type='email'
 					name='email'
-					handleChange={e => setEmail(e.target.value)}
+					handleChange={handleChange}
 					value={email}
 					required
 				/>
@@ -52,7 +58,7 @@ const SignUp = () => {
 					label='password'
 					name='password'
 					type='password'
-					handleChange={e => setPassWord(e.target.value)}
+					handleChange={handleChange}
 					value={password}
 					required
 				/>
@@ -60,7 +66,7 @@ const SignUp = () => {
 					label='confirm password'
 					name='confirmPassword'
 					type='password'
-					handleChange={e => setConfirmPassword(e.target.value)}
+					handleChange={handleChange}
 					value={confirmPassword}
 					required
 				/>
