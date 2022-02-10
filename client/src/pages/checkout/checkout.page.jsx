@@ -45,7 +45,7 @@ const CheckOutPage = () => {
 					4242 4242 4242 4242 -- Exp: 01/25 -- CVV: 123
 				</p>
 			</div>
-			<StripeCheckoutButton />
+			<StripeCheckoutButton price={totalPrice} />
 		</div>
 	);
 };

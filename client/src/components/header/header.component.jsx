@@ -13,7 +13,7 @@ import {
 	OptionLink
 } from './header.styles';
 import { useDispatch } from 'react-redux';
-import { signOutStart, signOutSuccess } from '../../redux/user/user.slice';
+import { signOutStart } from '../../redux/user/user.slice';
 
 const Header = () => {
 	const currentUser = useSelector(selectCurrentUser);
