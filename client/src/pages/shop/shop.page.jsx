@@ -1,31 +1,19 @@
 import './shop.styles.scss';
-import { selectCollections } from '../../redux/shop/shop.selector';
 import CollectionPreview from '../../components/collection-preview/collection-preview.component';
-import { useDispatch } from 'react-redux';
-import { fetchShopDataStart } from '../../redux/shop/shop.slice.js';
-import { useSelector } from 'react-redux';
-import { selectStatus } from '../../redux/shop/shop.selector';
-import { useEffect } from 'react';
 import { Spinner } from '../../components/with-spinner/with-spiner.component';
+import { useQuery } from '@apollo/client';
+import { GET_COLLECTIONS } from '../../graphql/shop/shop.query';
 
 const ShopPage = () => {
-	const dispatch = useDispatch();
-	const status = useSelector(selectStatus);
-	const collections = useSelector(selectCollections);
+	const { loading, error, data } = useQuery(GET_COLLECTIONS);
 
-	useEffect(() => {
-		if (status === 'idle') {
-			dispatch(fetchShopDataStart());
-		}
-	}, [dispatch, status]);
+	if (loading) return <Spinner />;
 
-	console.log(collections);
+	if (error) return <h1>Error: {error.message}</h1>;
 
-	return status === 'loading' || status === 'idle' ? (
-		<Spinner />
-	) : (
+	return (
 		<div className='shop-page'>
-			{collections.map(({ id, ...props }) => (
+			{data.collections.map(({ id, ...props }) => (
 				<CollectionPreview key={id} {...props} />
 			))}
 		</div>
