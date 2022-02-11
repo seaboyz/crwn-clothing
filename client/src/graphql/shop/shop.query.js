@@ -15,15 +15,15 @@ export const GET_COLLECTIONS = gql(`
 `);
 
 export const GET_COLLECTION_BY_TITLE = gql(`
-  query($title: String) {
-    getCollectionsByTitle(title: $title) {
-      title
-      items {
-        id
-        name
-        price
-        imageUrl
-      }
+query ($title: String) {
+  getCollectionsByTitle(title: $title) {
+    title
+    items {
+      id
+      name
+      price
+      imageUrl
     }
   }
+}
 `);

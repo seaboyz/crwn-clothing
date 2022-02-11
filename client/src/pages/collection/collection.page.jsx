@@ -12,14 +12,15 @@ const CollectionPage = () => {
 	const { loading, error, data } = useQuery(GET_COLLECTION_BY_TITLE, {
 		variables: { title: category }
 	});
-
-	const {
-		getCollectionsByTitle: { title, items }
-	} = data;
+	console.log(data);
 
 	if (loading) return <Spinner />;
 
 	if (error) return <Navigate to={'/'} />;
+
+	const {
+		getCollectionsByTitle: { title, items }
+	} = data;
 
 	return (
 		<div className='collection-page'>
