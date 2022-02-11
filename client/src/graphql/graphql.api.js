@@ -5,5 +5,9 @@ export const getShopData = async () => {
 	const {
 		data: { collections }
 	} = await client.query({ query: GET_COLLECTIONS });
-	return collections;
+
+	return collections.map(collection => ({
+		routeName: collection.title.toLowerCase(),
+		...collection
+	}));
 };

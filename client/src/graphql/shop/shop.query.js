@@ -6,6 +6,7 @@ export const GET_COLLECTIONS = gql(`
       title
       items {
         id
+        name
         price
         imageUrl
       }

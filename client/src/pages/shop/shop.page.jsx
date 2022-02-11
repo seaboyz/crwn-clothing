@@ -19,6 +19,8 @@ const ShopPage = () => {
 		}
 	}, [dispatch, status]);
 
+	console.log(collections);
+
 	return status === 'loading' || status === 'idle' ? (
 		<Spinner />
 	) : (
