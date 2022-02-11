@@ -1,5 +1,5 @@
 import { takeLatest, put, call, all } from 'redux-saga/effects';
-import { getShopData } from '../../firebase/firebase.util';
+import { getShopData } from '../../graphql/graphql.api';
 import {
 	fetchShopDataStart,
 	fetchShopDataSuccess,
