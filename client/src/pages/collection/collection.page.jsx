@@ -1,33 +1,31 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
 import { Navigate, useParams } from 'react-router-dom';
 import CollectionItem from '../../components/collection-item/collection-item.component';
 import { Spinner } from '../../components/with-spinner/with-spiner.component';
-import { selectCollection, selectStatus } from '../../redux/shop/shop.selector';
-import { fetchShopDataStart } from '../../redux/shop/shop.slice';
+
 import './collection.styles.scss';
+import { useQuery } from '@apollo/client';
+import { GET_COLLECTION_BY_TITLE } from '../../graphql/shop/shop.query';
 
 const CollectionPage = () => {
 	const { category } = useParams();
-	const status = useSelector(selectStatus);
-	const collection = useSelector(selectCollection(category));
 
-	const dispatch = useDispatch();
+	const { loading, error, data } = useQuery(GET_COLLECTION_BY_TITLE, {
+		variables: { title: category }
+	});
 
-	useEffect(() => {
-		dispatch(fetchShopDataStart());
-	}, [dispatch]);
+	const {
+		getCollectionsByTitle: { title, items }
+	} = data;
 
-	return status === 'loading' || status === 'idle' ? (
-		<Spinner />
-	) : !collection ? (
-		<Navigate to='/' />
-	) : (
+	if (loading) return <Spinner />;
+
+	if (error) return <Navigate to={'/'} />;
+
+	return (
 		<div className='collection-page'>
-			<h2 className='title'>{collection.title}</h2>
+			<h2 className='title'>{title}</h2>
 			<div className='items'>
-				{collection.items.map(item => (
+				{items.map(item => (
 					<CollectionItem key={item.id} item={item} />
 				))}
 			</div>

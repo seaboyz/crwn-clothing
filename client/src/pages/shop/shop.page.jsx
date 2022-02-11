@@ -11,9 +11,14 @@ const ShopPage = () => {
 
 	if (error) return <h1>Error: {error.message}</h1>;
 
+	const collections = data.collections.map(collection => ({
+		...collection,
+		routeName: collection.title.toLowerCase()
+	}));
+
 	return (
 		<div className='shop-page'>
-			{data.collections.map(({ id, ...props }) => (
+			{collections.map(({ id, ...props }) => (
 				<CollectionPreview key={id} {...props} />
 			))}
 		</div>
