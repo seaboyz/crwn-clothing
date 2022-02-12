@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { addItem } from '../../redux/cart/cart.slice.js';
+import { addItem } from '../../graphql/cache.js';
 import CustomButton from '../custom-button/custom-button.component';
 import './collection-item.styles.scss';
 
@@ -18,7 +18,7 @@ const CollectionItem = ({ item }) => {
 			</div>
 			<CustomButton
 				className='custom-button'
-				onClick={() => dispatch(addItem(item))}
+				onClick={() => addItem(item)}
 				inverted
 			>
 				Add to cart

@@ -6,16 +6,16 @@ import { isEmpty } from 'ramda';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useQuery } from '@apollo/client';
-import { GET_CART_HIDDEN } from '../../graphql/cart/cart.query';
+import { GET_CART, GET_CART_HIDDEN } from '../../graphql/cart/cart.query';
 import { toggleCartHidden } from '../../graphql/cache';
 
 const CartDropdown = () => {
-	const cartItems = useSelector(selectCartItems);
 	const navigate = useNavigate();
 
-	const { data } = useQuery(GET_CART_HIDDEN);
+	const { data } = useQuery(GET_CART);
 
 	const hidden = data.cartHidden;
+	const cartItems = data.cartItems;
 
 	return hidden ? null : (
 		<div className='cart-dropdown'>

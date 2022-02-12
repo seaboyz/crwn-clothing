@@ -1,14 +1,14 @@
 import './checkout.styles.scss';
-import {
-	selectCartItems,
-	selectTotalPrice
-} from '../../redux/cart/cart.selector.js';
+import { selectTotalPrice } from '../../redux/cart/cart.selector.js';
 import CheckOutItem from '../../components/checkout-item/checkout-item.component';
 import { useSelector } from 'react-redux';
 import StripeCheckoutButton from '../../components/stripe-button/stripe-button.component';
+import { useQuery } from '@apollo/client';
+import { GET_CART_ITEMS } from '../../graphql/cart/cart.query';
 
 const CheckOutPage = () => {
-	const cartItems = useSelector(selectCartItems);
+	const { data } = useQuery(GET_CART_ITEMS);
+	const cartItems = data.cartItems;
 	const totalPrice = useSelector(selectTotalPrice);
 	return (
 		<div className='checkout-page'>
