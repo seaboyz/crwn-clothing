@@ -1,5 +1,5 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
-import { typeDefs, resolvers } from './graphql.resolvers';
+import { typeDefs, resolvers } from './resolver';
 import { GET_CART_HIDDEN } from './cart/cart.query';
 
 const cache = new InMemoryCache();

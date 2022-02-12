@@ -1,10 +1,10 @@
 import { takeLatest, put, call, all } from 'redux-saga/effects';
-import { getShopData } from '../../graphql/graphql.api';
 import {
 	fetchShopDataStart,
 	fetchShopDataSuccess,
 	fetchShopDataFailed
 } from '../shop/shop.slice';
+import { getShopData } from '../../firebase/firebase.util';
 
 export function* shopSagas() {
 	yield all([watchStartFetchShopData()]);
