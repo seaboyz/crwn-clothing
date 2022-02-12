@@ -1,17 +1,14 @@
-import { makeVar, InMemoryCache } from '@apollo/client';
+import { InMemoryCache } from '@apollo/client';
+import { GET_CART_HIDDEN } from './cart/cart.query';
 
-export const cartHiddenVar = makeVar(true);
+export const cache = new InMemoryCache();
 
-export const cache = new InMemoryCache({
-	typePolicies: {
-		Query: {
-			fields: {
-				cartHidden: {
-					read() {
-						return cartHiddenVar();
-					}
-				}
-			}
-		}
-	}
+cache.writeQuery({
+	query: GET_CART_HIDDEN,
+	data: { cartHidden: true }
 });
+
+export const toggleCartHidden = () =>
+	cache.updateQuery({ query: GET_CART_HIDDEN }, data => ({
+		cartHidden: !data.cartHidden
+	}));

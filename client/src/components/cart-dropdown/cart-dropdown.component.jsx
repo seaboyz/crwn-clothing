@@ -5,14 +5,17 @@ import { selectCartItems } from '../../redux/cart/cart.selector';
 import { isEmpty } from 'ramda';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useReactiveVar } from '@apollo/client';
-import { cartHiddenVar } from '../../graphql/cache';
+import { useQuery } from '@apollo/client';
+import { GET_CART_HIDDEN } from '../../graphql/cart/cart.query';
+import { toggleCartHidden } from '../../graphql/cache';
 
 const CartDropdown = () => {
 	const cartItems = useSelector(selectCartItems);
 	const navigate = useNavigate();
 
-	const hidden = useReactiveVar(cartHiddenVar);
+	const { data } = useQuery(GET_CART_HIDDEN);
+
+	const hidden = data.cartHidden;
 
 	return hidden ? null : (
 		<div className='cart-dropdown'>
@@ -28,7 +31,7 @@ const CartDropdown = () => {
 			<CustomButton
 				onClick={() => {
 					navigate('/checkout');
-					cartHiddenVar(!cartHiddenVar());
+					toggleCartHidden();
 				}}
 			>
 				go to checkout
