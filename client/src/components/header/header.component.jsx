@@ -2,23 +2,20 @@ import './header.styles.scss';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import CartIcon from '../cart-icon/cart-icon.component';
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
-import { selectCartDropDownHidden } from '../../redux/cart/cart.selector';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
-
-import { useSelector } from 'react-redux';
 import {
 	HeaderContainer,
 	LogoContainer,
 	OptionsContainer,
 	OptionLink
 } from './header.styles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { signOutStart } from '../../redux/user/user.slice';
 
 const Header = () => {
 	const currentUser = useSelector(selectCurrentUser);
-	const hidden = useSelector(selectCartDropDownHidden);
 	const dispatch = useDispatch();
+
 	return (
 		<HeaderContainer>
 			<LogoContainer to='/'>
@@ -43,7 +40,7 @@ const Header = () => {
 
 				<CartIcon />
 			</OptionsContainer>
-			{hidden ? null : <CartDropdown />}
+			<CartDropdown />
 		</HeaderContainer>
 	);
 };

@@ -9,12 +9,18 @@ import { useNavigate } from 'react-router-dom';
 import { toggleCartHidden } from '../../redux/cart/cart.slice.js';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+import { useQuery, useMutation } from '@apollo/client';
+import { GET_CART_HIDDEN } from '../../graphql/cart/cart.query.js';
 
 const CartDropdown = () => {
 	const cartItems = useSelector(selectCartItems);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	return (
+
+	const { _, __, data } = useQuery(GET_CART_HIDDEN);
+	const hidden = data.cartHidden;
+
+	return hidden ? null : (
 		<div className='cart-dropdown'>
 			{isEmpty(cartItems) ? (
 				<span className='empty-message'>Your cart is empty</span>

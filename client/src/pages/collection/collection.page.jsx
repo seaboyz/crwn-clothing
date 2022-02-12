@@ -12,7 +12,6 @@ const CollectionPage = () => {
 	const { loading, error, data } = useQuery(GET_COLLECTION_BY_TITLE, {
 		variables: { title: category }
 	});
-	console.log(data);
 
 	if (loading) return <Spinner />;
 
@@ -21,7 +20,6 @@ const CollectionPage = () => {
 	const {
 		getCollectionsByTitle: { title, items }
 	} = data;
-
 	return (
 		<div className='collection-page'>
 			<h2 className='title'>{title}</h2>
