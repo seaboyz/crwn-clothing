@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const GET_CART_HIDDEN = gql`
-	query {
+	query CartHidden {
 		cartHidden @client
 	}
 `;
