@@ -6,6 +6,7 @@ import { lazy, useEffect, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
 import { checkUserSessionStart } from './redux/user/user.slice';
 import { Spinner } from './components/with-spinner/with-spiner.component';
+import ErrorBoundary from './components/error-boundary/error-boundary.component';
 
 const HomePage = lazy(() => import('./pages/home/home.page.jsx'));
 const SignInAndSignUp = lazy(() =>
@@ -23,16 +24,18 @@ const App = () => {
 	return (
 		<div className='App'>
 			<Header />
-			<Suspense fallback={<Spinner />}>
-				<Routes>
-					<Route path='/' element={<HomePage />} />
-					<Route path='/shop' element={<ShopPage />} />
-					<Route path='/shop/:category' element={<CollectionPage />} />
-					<Route path='/signin' element={<SignInAndSignUp />} />
-					<Route path='/checkout' element={<CheckOutPage />} />
-					<Route path='*' element={<HomePage />} />
-				</Routes>
-			</Suspense>
+			<ErrorBoundary>
+				<Suspense fallback={<Spinner />}>
+					<Routes>
+						<Route path='/' element={<HomePage />} />
+						<Route path='/shop' element={<ShopPage />} />
+						<Route path='/shop/:category' element={<CollectionPage />} />
+						<Route path='/signin' element={<SignInAndSignUp />} />
+						<Route path='/checkout' element={<CheckOutPage />} />
+						<Route path='*' element={<HomePage />} />
+					</Routes>
+				</Suspense>
+			</ErrorBoundary>
 		</div>
 	);
 };
