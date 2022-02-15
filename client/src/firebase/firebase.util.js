@@ -15,6 +15,7 @@ import {
 	getFirestore,
 	query,
 	setDoc,
+	updateDoc,
 	writeBatch
 } from 'firebase/firestore';
 
@@ -40,9 +41,10 @@ export const signInWithGoogle = async () => {
 	try {
 		const result = await signInWithPopup(auth, provider);
 		const userRef = await createUserProfileDocument(result.user);
-		const userSnap = await getDoc(userRef);
-		const userInfo = { id: userSnap.id, ...userSnap.data() };
-		return userInfo;
+		// const userSnap = await getDoc(userRef);
+		// const userInfo = { id: userSnap.id, ...userSnap.data() };
+		// return userInfo;
+		return userRef;
 	} catch (error) {
 		throw error;
 	}
@@ -53,7 +55,7 @@ export const signInWithEmail = async (email, password) => {
 		const result = await signInWithEmailAndPassword(auth, email, password);
 		const userRef = await createUserProfileDocument(result.user);
 		const userSnap = await getDoc(userRef);
-		const userInfo = { id: userSnap.id, ...userSnap.data() };
+		const userInfo = { uid: userSnap.id, ...userSnap.data() };
 		return userInfo;
 	} catch (error) {
 		throw error;
@@ -94,7 +96,7 @@ export const signUp = async (email, password, firstname, lastname) => {
 		// save user to db
 		const userRef = await createUserProfileDocument(user, { displayName });
 		const userSnap = await getDoc(userRef);
-		const userInfo = { id: userSnap.id, ...userSnap.data() };
+		const userInfo = { uid: userSnap.id, ...userSnap.data() };
 		return userInfo;
 	} catch (error) {
 		console.log('fail to create a user ', error.message);
@@ -132,6 +134,21 @@ export const getCurrentUser = () =>
 			resolve(user);
 		}, reject);
 	});
+
+export const getUserRefById = async id => {
+	const user = doc(db, 'users', id);
+	return user;
+};
+
+export const updateCartInDb = (userRef, cartItems) => {
+	updateDoc(userRef, { cartItems });
+};
+
+export const getCartItemsInDb = async userRef => {
+	const userDoc = await getDoc(userRef);
+	const { cartItems } = userDoc.data();
+	return cartItems;
+};
 
 export const userSignOut = () => signOut(auth);
 

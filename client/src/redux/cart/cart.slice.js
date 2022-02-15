@@ -62,6 +62,10 @@ const slice = createSlice({
 
 		clearCart(state) {
 			state.cartItems = [];
+		},
+
+		updateCart(state, action) {
+			state.cartItems = action.payload;
 		}
 	}
 });
@@ -72,7 +76,8 @@ export const {
 	incQuantity,
 	decQuantity,
 	toggleCartHidden,
-	clearCart
+	clearCart,
+	updateCart
 } = slice.actions;
 
 export default slice.reducer;
