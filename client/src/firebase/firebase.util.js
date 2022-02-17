@@ -155,5 +155,6 @@ export const firebase = {
 	signInWithGoogle,
 	getCurrentUser,
 	signInWithEmail,
-	signUp
+	signUp,
+	getDirectory
 };

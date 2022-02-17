@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { firebase } from '../../firebase/firebase.util';
 
 const initialState = {
 	sections: [],
@@ -6,27 +7,24 @@ const initialState = {
 	error: null
 };
 
+export const fetchDirectory = createAsyncThunk('directory/fetch', async () => {
+	const directory = await firebase.getDirectory();
+	return directory;
+});
+
 const directorySlice = createSlice({
 	name: 'directory',
 	initialState,
-	reducers: {
-		fetchDirectoryStart(state) {
-			state.status = 'loading';
-		},
-		fetchDirectorySuccess(state, action) {
-			state.status = 'succedded';
-			state.sections = action.payload;
-		},
-		fetchDirectoryFailed(state, action) {
-			state.status = 'failed';
-			state.error = action.payload.message;
-		}
+	extraReducers: builder => {
+		builder
+			.addCase(fetchDirectory.pending, state => {
+				state.status = 'loading';
+			})
+			.addCase(fetchDirectory.fulfilled, (state, action) => {
+				state.status = 'succeeded';
+				state.sections = action.payload;
+			});
 	}
 });
 
-export const {
-	fetchDirectoryStart,
-	fetchDirectorySuccess,
-	fetchDirectoryFailed
-} = directorySlice.actions;
 export default directorySlice.reducer;
