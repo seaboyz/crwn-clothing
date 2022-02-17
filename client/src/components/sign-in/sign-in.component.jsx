@@ -4,10 +4,7 @@ import FormInput from '../../components/form-input/form-input.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
 import GoogleButton from 'react-google-button';
 import { useDispatch } from 'react-redux';
-import {
-	signInWithGoogleStart,
-	signInWithWithEmailAndPasswordStart
-} from '../../redux/user/user.slice';
+import { signInWithEmail, signInWithGoogle } from '../../redux/user/user.slice';
 
 const SignIn = () => {
 	const disPatch = useDispatch();
@@ -28,7 +25,7 @@ const SignIn = () => {
 			<form
 				onSubmit={e => {
 					e.preventDefault();
-					disPatch(signInWithWithEmailAndPasswordStart({ email, password }));
+					disPatch(signInWithEmail({ email, password }));
 				}}
 			>
 				<FormInput
@@ -50,7 +47,7 @@ const SignIn = () => {
 				<div style={{ display: 'flex', justifyContent: 'space-between' }}>
 					<CustomButton type='submit'>Sign In</CustomButton>
 					<GoogleButton
-						onClick={() => disPatch(signInWithGoogleStart())}
+						onClick={() => disPatch(signInWithGoogle())}
 						label='Sign In with google'
 					/>
 				</div>

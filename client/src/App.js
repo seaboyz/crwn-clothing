@@ -4,7 +4,7 @@ import Header from './components/header/header.component';
 
 import { lazy, useEffect, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
-import { checkUserSessionStart } from './redux/user/user.slice';
+import { checkUserSession } from './redux/user/user.slice';
 import { Spinner } from './components/with-spinner/with-spiner.component';
 import ErrorBoundary from './components/error-boundary/error-boundary.component';
 
@@ -19,7 +19,7 @@ const CollectionPage = lazy(() => import('./pages/collection/collection.page'));
 const App = () => {
 	const dispatch = useDispatch();
 	useEffect(() => {
-		dispatch(checkUserSessionStart());
+		dispatch(checkUserSession());
 	}, [dispatch]);
 	return (
 		<div className='App'>

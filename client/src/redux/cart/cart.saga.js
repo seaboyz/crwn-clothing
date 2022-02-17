@@ -1,4 +1,3 @@
-import { isEmpty } from 'ramda';
 import { takeLatest, put, all, select } from 'redux-saga/effects';
 import {
 	getCartItemsInDb,
@@ -6,7 +5,7 @@ import {
 	updateCartInDb
 } from '../../firebase/firebase.util';
 import { selectCurrentUser } from '../user/user.selectors';
-import { signInSuccess, signOutSuccess } from '../user/user.slice';
+import { signOut, signInWithGoogle } from '../user/user.slice';
 import { selectCartItems } from './cart.selector';
 import {
 	addItem,
@@ -18,7 +17,7 @@ import {
 } from './cart.slice';
 
 function* watchSignOutSuccess() {
-	yield takeLatest(signOutSuccess.type, onSignOutSuccess);
+	yield takeLatest(signOut.fulfilled.type, onSignOutSuccess);
 }
 
 function* onSignOutSuccess() {
@@ -26,7 +25,7 @@ function* onSignOutSuccess() {
 }
 
 function* watchSignInSuccess() {
-	yield takeLatest(signInSuccess.type, onSignInSuccess);
+	yield takeLatest(signInWithGoogle.fulfilled.type, onSignInSuccess);
 }
 
 function* onSignInSuccess() {

@@ -13,7 +13,7 @@ import {
 	OptionLink
 } from './header.styles';
 import { useDispatch } from 'react-redux';
-import { signOutStart } from '../../redux/user/user.slice';
+import { signOut } from '../../redux/user/user.slice';
 
 const Header = () => {
 	const currentUser = useSelector(selectCurrentUser);
@@ -32,7 +32,7 @@ const Header = () => {
 					<OptionLink
 						as={'div'}
 						onClick={() => {
-							dispatch(signOutStart());
+							dispatch(signOut());
 						}}
 					>
 						Sign out

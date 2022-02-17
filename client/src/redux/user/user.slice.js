@@ -1,55 +1,62 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { firebase } from '../../firebase/firebase.util';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
+export const signInWithGoogle = createAsyncThunk(
+	'user/signInWithGoogle',
+	async () => {
+		const user = await firebase.signInWithGoogle();
+		return user;
+	}
+);
+export const checkUserSession = createAsyncThunk(
+	'user/checkUserSession',
+	async () => {
+		const user = await firebase.getCurrentUser();
+		return user;
+	}
+);
+export const signInWithEmail = createAsyncThunk(
+	'user/signInWithEmail',
+	async ({ email, password }) => {
+		const user = await firebase.signInWithEmail(email, password);
+		return user;
+	}
+);
+export const signUp = createAsyncThunk(
+	'user/signUp',
+	async ({ email, password, firstname, lastname }) => {
+		const user = await firebase.signUp(email, password, firstname, lastname);
+		return user;
+	}
+);
+
+export const signOut = createAsyncThunk('user/signOUt', () => {
+	firebase.userSignOut();
+});
 
 export const slice = createSlice({
 	name: 'user',
 	initialState: {
-		currentUser: null,
-		status: 'idle',
-		error: null
+		currentUser: null
 	},
-	reducers: {
-		signInWithGoogleStart(state) {
-			state.status = 'loading';
-		},
-		signInWithWithEmailAndPasswordStart(state) {
-			state.status = 'loading';
-		},
-		signInSuccess(state, action) {
-			state.status = 'succeeded';
-			state.error = null;
-			state.currentUser = action.payload;
-		},
-		signInFailed(state, action) {
-			state.status = 'failed';
-			state.error = action.payload.message;
-		},
-		signOutStart() {},
-		signOutSuccess(state) {
-			state.status = 'succeeded';
-			state.currentUser = null;
-		},
-		signOUtFailed(state, action) {
-			state.status = 'failed';
-			state.error = action.payload.message;
-		},
-		checkUserSessionStart() {},
-		signUpStart(state) {
-			state.status = 'loading';
-		}
+	extraReducers: builder => {
+		builder
+			.addCase(signInWithGoogle.fulfilled, (state, action) => {
+				state.currentUser = action.payload;
+			})
+			.addCase(signInWithEmail.fulfilled, (state, action) => {
+				state.currentUser = action.payload;
+			})
+			.addCase(signUp.fulfilled, (state, action) => {
+				state.currentUser = action.payload;
+			})
+			.addCase(checkUserSession.fulfilled, (state, action) => {
+				state.currentUser = action.payload;
+			})
+			.addCase(signOut.fulfilled, state => {
+				state.currentUser = null;
+			});
 	}
 });
-
-export const {
-	setCurrentUser,
-	signInWithGoogleStart,
-	signInWithWithEmailAndPasswordStart,
-	signInSuccess,
-	signInFailed,
-	checkUserSessionStart,
-	signOutStart,
-	signOUtFailed,
-	signOutSuccess,
-	signUpStart
-} = slice.actions;
 
 export default slice.reducer;

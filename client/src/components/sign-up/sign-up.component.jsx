@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import CustomButton from '../custom-button/custom-button.component';
 import FormInput from '../form-input/form-input.component';
 import './sign-up.styles.scss';
-import { signUpStart } from '../../redux/user/user.slice.js';
+import { signUp, signUpStart } from '../../redux/user/user.slice.js';
 
 const SignUp = () => {
 	const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const SignUp = () => {
 			<form
 				onSubmit={e => {
 					e.preventDefault();
-					dispatch(signUpStart({ firstname, lastname, email, password }));
+					dispatch(signUp({ firstname, lastname, email, password }));
 				}}
 			>
 				<FormInput
