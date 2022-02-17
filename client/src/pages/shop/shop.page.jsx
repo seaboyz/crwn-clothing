@@ -2,7 +2,7 @@ import './shop.styles.scss';
 import { selectCollections } from '../../redux/shop/shop.selector';
 import CollectionPreview from '../../components/collection-preview/collection-preview.component';
 import { useDispatch } from 'react-redux';
-import { fetchShopDataStart } from '../../redux/shop/shop.slice.js';
+import { fetchShopData } from '../../redux/shop/shop.slice.js';
 import { useSelector } from 'react-redux';
 import { selectStatus } from '../../redux/shop/shop.selector';
 import { useEffect } from 'react';
@@ -15,7 +15,7 @@ const ShopPage = () => {
 
 	useEffect(() => {
 		if (status === 'idle') {
-			dispatch(fetchShopDataStart());
+			dispatch(fetchShopData());
 		}
 	}, [dispatch, status]);
 

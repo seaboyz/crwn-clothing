@@ -156,5 +156,6 @@ export const firebase = {
 	getCurrentUser,
 	signInWithEmail,
 	signUp,
-	getDirectory
+	getDirectory,
+	getShopData
 };

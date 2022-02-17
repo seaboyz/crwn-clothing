@@ -5,7 +5,7 @@ import { Navigate, useParams } from 'react-router-dom';
 import CollectionItem from '../../components/collection-item/collection-item.component';
 import { Spinner } from '../../components/with-spinner/with-spiner.component';
 import { selectCollection, selectStatus } from '../../redux/shop/shop.selector';
-import { fetchShopDataStart } from '../../redux/shop/shop.slice';
+import { fetchShopData } from '../../redux/shop/shop.slice';
 import './collection.styles.scss';
 
 const CollectionPage = () => {
@@ -16,7 +16,7 @@ const CollectionPage = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(fetchShopDataStart());
+		dispatch(fetchShopData());
 	}, [dispatch]);
 
 	return status === 'loading' || status === 'idle' ? (
