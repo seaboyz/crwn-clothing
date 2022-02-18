@@ -5,7 +5,7 @@ import {
 	updateCartInDb
 } from '../../firebase/firebase.util';
 import { selectCurrentUser } from '../user/user.selectors';
-import { signOut, signInWithGoogle } from '../user/user.slice';
+import { signOut, signInWithGoogle, signInWithEmail } from '../user/user.slice';
 import { selectCartItems } from './cart.selector';
 import {
 	addItem,
@@ -25,7 +25,10 @@ function* onSignOutSuccess() {
 }
 
 function* watchSignInSuccess() {
-	yield takeLatest(signInWithGoogle.fulfilled.type, onSignInSuccess);
+	yield takeLatest(
+		[signInWithGoogle.fulfilled.type, signInWithEmail.fulfilled.type],
+		onSignInSuccess
+	);
 }
 
 function* onSignInSuccess() {
@@ -52,11 +55,11 @@ function* watchCartUpdate() {
 			decQuantity.type,
 			clearCart.type
 		],
-		syncCart
+		onCartUpdate
 	);
 }
 
-function* syncCart() {
+function* onCartUpdate() {
 	try {
 		const currentUser = yield select(selectCurrentUser);
 		if (!currentUser) return;
